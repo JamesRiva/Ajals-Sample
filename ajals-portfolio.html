@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AJALS Engineering Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Barlow+Condensed:wght@300;400;500;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #CC1E1E;
+    --red-dark: #991414;
+    --red-glow: rgba(204,30,30,0.3);
+    --blue-dark: #0A1628;
+    --blue-mid: #0D2040;
+    --blue-accent: #1B4B8A;
+    --blue-light: #2A6FCC;
+    --white: #F5F5F5;
+    --gray: #8A9BB0;
+    --gray-light: #C8D4E0;
+    --steel: #1E2D45;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--blue-dark);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--blue-dark); }
+  ::-webkit-scrollbar-thumb { background: var(--red); }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 60px;
+    background: rgba(10,22,40,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none;
+  }
+
+  .nav-logo-icon {
+    width: 42px; height: 42px;
+    background: var(--red);
+    clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700; font-size: 18px; color: #fff;
+    flex-shrink: 0;
+  }
+
+  .nav-logo-text {
+    display: flex; flex-direction: column;
+    line-height: 1;
+  }
+  .nav-logo-text span:first-child {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800; font-size: 22px; letter-spacing: 3px;
+    color: #fff;
+  }
+  .nav-logo-text span:last-child {
+    font-size: 9px; letter-spacing: 2px; color: var(--gray);
+    text-transform: uppercase; margin-top: 2px;
+  }
+
+  .nav-links {
+    display: flex; gap: 36px; list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none; color: var(--gray-light);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
+    background: var(--red); transition: width 0.3s;
+  }
+  .nav-links a:hover { color: #fff; }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-cta {
+    background: var(--red); color: #fff !important;
+    padding: 10px 24px; border: none;
+    font-family: 'Barlow Condensed', sans-serif !important;
+    font-weight: 600 !important; font-size: 13px !important;
+    letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; transition: background 0.2s, transform 0.2s;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+  .nav-cta:hover { background: var(--red-dark); transform: translateY(-1px); }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding: 120px 60px 80px;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 80% at 70% 50%, rgba(27,75,138,0.25) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(204,30,30,0.12) 0%, transparent 50%),
+      linear-gradient(135deg, #0A1628 0%, #0D1E38 40%, #0A1628 100%);
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0; opacity: 0.07;
+    background-image: 
+      linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-diagonal {
+    position: absolute; right: 0; top: 0; bottom: 0;
+    width: 45%;
+    background: linear-gradient(135deg, transparent 0%, rgba(204,30,30,0.08) 50%, rgba(204,30,30,0.15) 100%);
+    clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 640px;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(204,30,30,0.15);
+    border: 1px solid rgba(204,30,30,0.4);
+    padding: 6px 16px;
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: #ff6b6b; margin-bottom: 28px;
+    animation: fadeSlideUp 0.8s ease forwards;
+    opacity: 0;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--red);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  .hero-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: clamp(52px, 6vw, 82px);
+    line-height: 0.95;
+    letter-spacing: -1px;
+    margin-bottom: 24px;
+    animation: fadeSlideUp 0.8s 0.15s ease forwards;
+    opacity: 0;
+  }
+  .hero-title .accent { color: var(--red); display: block; }
+  .hero-title .sub { font-size: 0.52em; font-weight: 300; color: var(--gray-light); letter-spacing: 4px; display: block; margin-bottom: 8px; }
+
+  .hero-desc {
+    font-size: 15px; line-height: 1.7; color: var(--gray-light);
+    max-width: 480px; margin-bottom: 40px;
+    animation: fadeSlideUp 0.8s 0.3s ease forwards;
+    opacity: 0;
+  }
+
+  .hero-actions {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    animation: fadeSlideUp 0.8s 0.45s ease forwards;
+    opacity: 0;
+  }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--red); color: #fff;
+    padding: 14px 32px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 14px; letter-spacing: 2px; text-transform: uppercase;
+    text-decoration: none;
+    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover {
+    background: var(--red-dark); transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(204,30,30,0.4);
+  }
+
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 10px;
+    border: 1px solid rgba(255,255,255,0.25); color: var(--white);
+    padding: 14px 32px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; font-size: 14px; letter-spacing: 2px; text-transform: uppercase;
+    text-decoration: none;
+    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-secondary:hover {
+    border-color: var(--red); background: rgba(204,30,30,0.1);
+  }
+
+  .hero-stats {
+    position: absolute; bottom: 60px; right: 60px; z-index: 2;
+    display: flex; gap: 40px;
+    animation: fadeSlideUp 0.8s 0.6s ease forwards;
+    opacity: 0;
+  }
+
+  .stat {
+    text-align: center;
+  }
+  .stat-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800; font-size: 42px; line-height: 1;
+    color: #fff;
+  }
+  .stat-number span { color: var(--red); }
+  .stat-label {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gray); margin-top: 4px;
+  }
+
+  /* ─── SECTION COMMON ─── */
+  section { padding: 100px 60px; }
+
+  .section-header {
+    margin-bottom: 60px;
+  }
+  .section-tag {
+    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--red); margin-bottom: 12px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-tag::after {
+    content: '';
+    flex: 0 0 40px; height: 1px; background: var(--red);
+  }
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800; font-size: clamp(36px, 4vw, 56px);
+    line-height: 1; letter-spacing: -0.5px;
+  }
+  .section-title em { color: var(--red); font-style: normal; }
+
+  /* ─── ABOUT ─── */
+  #about {
+    background: var(--steel);
+    position: relative; overflow: hidden;
+  }
+  #about::before {
+    content: '';
+    position: absolute; right: -100px; top: -100px;
+    width: 500px; height: 500px;
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 50%;
+  }
+  #about::after {
+    content: '';
+    position: absolute; right: 0; top: 0; bottom: 0;
+    width: 40%;
+    background: linear-gradient(90deg, transparent, rgba(204,30,30,0.05));
+    clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%);
+  }
+
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    position: relative; z-index: 1;
+  }
+
+  .about-text p {
+    color: var(--gray-light); line-height: 1.8; margin-bottom: 20px;
+    font-size: 15px;
+  }
+
+  .about-highlights {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 36px;
+  }
+  .highlight-item {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-left: 3px solid var(--red);
+    padding: 16px 20px;
+  }
+  .highlight-item strong {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 14px; letter-spacing: 1px; text-transform: uppercase;
+    display: block; margin-bottom: 4px;
+  }
+  .highlight-item span {
+    font-size: 12px; color: var(--gray);
+  }
+
+  .about-visual {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+  .vis-card {
+    background: linear-gradient(135deg, rgba(27,75,138,0.3), rgba(10,22,40,0.6));
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 28px 24px;
+    position: relative; overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .vis-card:hover { transform: translateY(-4px); border-color: var(--red); }
+  .vis-card:nth-child(2) { margin-top: 30px; }
+  .vis-card:nth-child(4) { margin-top: -30px; }
+  .vis-card-icon {
+    font-size: 28px; margin-bottom: 12px;
+  }
+  .vis-card-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 13px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--gray-light);
+  }
+  .vis-card-val {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800; font-size: 32px;
+    color: #fff; line-height: 1; margin-top: 4px;
+  }
+  .vis-card-val span { color: var(--red); }
+
+  /* ─── SERVICES ─── */
+  #services { background: var(--blue-dark); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2px;
+  }
+
+  .service-card {
+    background: var(--steel);
+    padding: 36px 32px;
+    border-top: 3px solid transparent;
+    position: relative; overflow: hidden;
+    cursor: default;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(204,30,30,0.0), rgba(204,30,30,0.08));
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .service-card:hover { border-top-color: var(--red); background: #253450; }
+  .service-card:hover::before { opacity: 1; }
+
+  .service-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800; font-size: 48px;
+    color: rgba(255,255,255,0.05); line-height: 1;
+    position: absolute; top: 16px; right: 20px;
+  }
+
+  .service-icon {
+    width: 48px; height: 48px;
+    background: rgba(204,30,30,0.15);
+    border: 1px solid rgba(204,30,30,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; margin-bottom: 20px;
+    clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
+    transition: background 0.3s;
+  }
+  .service-card:hover .service-icon { background: rgba(204,30,30,0.3); }
+
+  .service-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 17px; text-transform: uppercase;
+    letter-spacing: 1px; margin-bottom: 10px;
+    position: relative; z-index: 1;
+  }
+  .service-desc {
+    font-size: 13px; color: var(--gray); line-height: 1.6;
+    position: relative; z-index: 1;
+  }
+
+  /* ─── WHY US ─── */
+  #why {
+    background: linear-gradient(135deg, var(--blue-mid), var(--blue-dark));
+    position: relative; overflow: hidden;
+  }
+  #why::before {
+    content: 'AJALS';
+    position: absolute; right: -20px; top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: 180px;
+    color: rgba(255,255,255,0.025);
+    white-space: nowrap; pointer-events: none;
+    letter-spacing: -10px;
+  }
+
+  .why-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    position: relative; z-index: 1;
+  }
+
+  .why-item {
+    display: flex; gap: 20px; align-items: flex-start;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    padding: 28px 24px;
+    transition: background 0.3s, border-color 0.3s;
+  }
+  .why-item:hover { background: rgba(204,30,30,0.08); border-color: rgba(204,30,30,0.3); }
+
+  .why-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: 40px; line-height: 1;
+    color: var(--red); flex-shrink: 0; width: 50px;
+  }
+  .why-text strong {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 16px; text-transform: uppercase;
+    letter-spacing: 1px; display: block; margin-bottom: 6px;
+  }
+  .why-text p { font-size: 13px; color: var(--gray); line-height: 1.6; }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    background: var(--steel);
+    position: relative; overflow: hidden;
+  }
+  #contact::after {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0; width: 6px;
+    background: var(--red);
+  }
+
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+  }
+
+  .contact-info { }
+  .contact-info p {
+    color: var(--gray-light); font-size: 15px; line-height: 1.8; margin-bottom: 40px;
+  }
+
+  .contact-items { display: flex; flex-direction: column; gap: 20px; }
+  .contact-item {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .contact-item:last-child { border-bottom: none; }
+  .ci-icon {
+    width: 40px; height: 40px; flex-shrink: 0;
+    background: rgba(204,30,30,0.15);
+    border: 1px solid rgba(204,30,30,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .ci-label {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gray); margin-bottom: 4px;
+  }
+  .ci-value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; font-size: 16px; color: #fff;
+  }
+  .ci-value a { color: #fff; text-decoration: none; }
+  .ci-value a:hover { color: #ff6b6b; }
+
+  .contact-form { }
+  .form-group { margin-bottom: 20px; }
+  .form-group label {
+    display: block; font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gray); margin-bottom: 8px;
+  }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #fff;
+    padding: 12px 16px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-color: var(--red);
+  }
+  .form-group select option { background: var(--blue-dark); }
+  .form-group textarea { resize: vertical; min-height: 120px; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #060E1A;
+    padding: 40px 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    flex-wrap: wrap; gap: 20px;
+  }
+
+  .footer-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800; font-size: 20px; letter-spacing: 3px; color: #fff;
+  }
+  .footer-logo span { color: var(--red); }
+
+  .footer-tagline {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gray);
+  }
+
+  .footer-copy {
+    font-size: 12px; color: var(--gray);
+  }
+
+  /* ─── TICKER ─── */
+  .ticker-wrap {
+    background: var(--red);
+    padding: 10px 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .ticker-track {
+    display: flex; gap: 0;
+    animation: ticker 30s linear infinite;
+    white-space: nowrap;
+  }
+  .ticker-item {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 13px; letter-spacing: 3px; text-transform: uppercase;
+    padding: 0 40px; color: rgba(255,255,255,0.85);
+    display: flex; align-items: center; gap: 16px;
+  }
+  .ticker-item::after {
+    content: '◆';
+    font-size: 8px; color: rgba(255,255,255,0.4);
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ─── SCROLL REVEAL ─── */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 70px 24px; }
+    #hero { padding: 100px 24px 60px; }
+    .hero-stats { position: relative; bottom: auto; right: auto; margin-top: 50px; justify-content: center; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    .why-grid { grid-template-columns: 1fr; }
+    footer { padding: 28px 24px; text-align: center; flex-direction: column; align-items: center; }
+    .about-highlights { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">
+    <div class="nav-logo-icon">A</div>
+    <div class="nav-logo-text">
+      <span>AJALS</span>
+      <span>Engineering Services</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get a Quote</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-diagonal"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">Licensed • Certified • Trusted</div>
+    <h1 class="hero-title">
+      <span class="sub">At Your Utmost Service</span>
+      AJALS <span class="accent">Engineering</span>
+    </h1>
+    <p class="hero-desc">
+      Professional mechanical, electrical, and electronics engineering services with precision-grade solutions for commercial, industrial, and infrastructural needs across the Philippines.
+    </p>
+    <div class="hero-actions">
+      <a href="#services" class="btn-primary">
+        <span>▶</span> Our Services
+      </a>
+      <a href="#contact" class="btn-secondary">
+        <span>◇</span> Contact Us
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-number">10<span>+</span></div>
+      <div class="stat-label">Years Active</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">500<span>+</span></div>
+      <div class="stat-label">Projects Done</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">12<span>+</span></div>
+      <div class="stat-label">Services Offered</div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <div class="ticker-item">Mechanical Engineering</div>
+    <div class="ticker-item">HVAC Design</div>
+    <div class="ticker-item">Fire Detection Systems</div>
+    <div class="ticker-item">Electrical Installation</div>
+    <div class="ticker-item">Smoke Control</div>
+    <div class="ticker-item">Sprinkler Systems</div>
+    <div class="ticker-item">VRF Air Conditioning</div>
+    <div class="ticker-item">Elevator Load Testing</div>
+    <div class="ticker-item">DOLE & PEZA Permits</div>
+    <div class="ticker-item">Ultrasonic Gauging</div>
+    <div class="ticker-item">Mechanical Engineering</div>
+    <div class="ticker-item">HVAC Design</div>
+    <div class="ticker-item">Fire Detection Systems</div>
+    <div class="ticker-item">Electrical Installation</div>
+    <div class="ticker-item">Smoke Control</div>
+    <div class="ticker-item">Sprinkler Systems</div>
+    <div class="ticker-item">VRF Air Conditioning</div>
+    <div class="ticker-item">Elevator Load Testing</div>
+    <div class="ticker-item">DOLE & PEZA Permits</div>
+    <div class="ticker-item">Ultrasonic Gauging</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <div class="section-header">
+        <div class="section-tag">Who We Are</div>
+        <h2 class="section-title">Engineering <em>Excellence</em><br>Built on Trust</h2>
+      </div>
+      <p>AJALS Engineering Services is a Philippine-based engineering firm dedicated to delivering top-quality mechanical, electrical, and electronic solutions. We combine technical expertise with a commitment to safety, compliance, and client satisfaction.</p>
+      <p>Our team of licensed engineers and skilled technicians brings decades of combined experience to every project — from preventive maintenance and system design to government permit processing and specialized testing services.</p>
+      <div class="about-highlights">
+        <div class="highlight-item">
+          <strong>Licensed Engineers</strong>
+          <span>PRC-certified professionals</span>
+        </div>
+        <div class="highlight-item">
+          <strong>DOLE Accredited</strong>
+          <span>Permit processing experts</span>
+        </div>
+        <div class="highlight-item">
+          <strong>Nationwide Service</strong>
+          <span>Serving all of the Philippines</span>
+        </div>
+        <div class="highlight-item">
+          <strong>Full Compliance</strong>
+          <span>Code-compliant installations</span>
+        </div>
+      </div>
+    </div>
+    <div class="about-visual reveal">
+      <div class="vis-card">
+        <div class="vis-card-icon">⚙️</div>
+        <div class="vis-card-label">Specialization</div>
+        <div class="vis-card-val">M<span>+</span>E</div>
+      </div>
+      <div class="vis-card">
+        <div class="vis-card-icon">🔥</div>
+        <div class="vis-card-label">Fire Safety Systems</div>
+        <div class="vis-card-val">ISO<span>✓</span></div>
+      </div>
+      <div class="vis-card">
+        <div class="vis-card-icon">❄️</div>
+        <div class="vis-card-label">HVAC & VRF</div>
+        <div class="vis-card-val">24<span>/7</span></div>
+      </div>
+      <div class="vis-card">
+        <div class="vis-card-icon">📋</div>
+        <div class="vis-card-label">Gov. Permits</div>
+        <div class="vis-card-val">100<span>%</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-header reveal">
+    <div class="section-tag">What We Do</div>
+    <h2 class="section-title">Our <em>Services</em></h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-number">01</div>
+      <div class="service-icon">📐</div>
+      <div class="service-name">Professional Mechanical Engineering Sign & Seal</div>
+      <div class="service-desc">Licensed mechanical engineers for official plan review, sign, and sealing of engineering documents for permits and construction.</div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-number">02</div>
+      <div class="service-icon">🔧</div>
+      <div class="service-name">Electrical, Mechanical & Electronics Preventive Maintenance</div>
+      <div class="service-desc">Scheduled preventive maintenance programs to maximize equipment uptime, efficiency, and lifespan across all mechanical and electrical systems.</div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-number">03</div>
+      <div class="service-icon">❄️</div>
+      <div class="service-name">HVAC Design & Installation</div>
+      <div class="service-desc">Complete heating, ventilation, and air conditioning system design, supply, installation, and commissioning for commercial and industrial facilities.</div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-number">04</div>
+      <div class="service-icon">🚨</div>
+      <div class="service-name">Fire Detection & Alarm System Design & Installation</div>
+      <div class="service-desc">Bureau of Fire Protection-compliant fire alarm and detection systems — design, supply, installation, and commissioning for all building types.</div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-number">05</div>
+      <div class="service-icon">⚡</div>
+      <div class="service-name">Electrical & Mechanical Work Installation</div>
+      <div class="service-desc">Full-scope electrical and mechanical works from conduit installation and cable pulling to panel board assembly and final connections.</div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-number">06</div>
+      <div class="service-icon">💨</div>
+      <div class="service-name">Smoke Control System Analysis & Design</div>
+      <div class="service-desc">Engineered smoke control solutions including pressurization, exhaust, and management systems to safeguard life safety in buildings.</div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-number">07</div>
+      <div class="service-icon">🚿</div>
+      <div class="service-name">Sprinkler System & Fire Hydrant Design</div>
+      <div class="service-desc">Design and installation of wet pipe, dry pipe, and pre-action sprinkler systems and fire hydrant networks per NFPA and local codes.</div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-number">08</div>
+      <div class="service-icon">🌡️</div>
+      <div class="service-name">VRF Air Conditioning System Design</div>
+      <div class="service-desc">Variable Refrigerant Flow system design for energy-efficient multi-zone climate control in commercial, mixed-use, and high-rise buildings.</div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-number">09</div>
+      <div class="service-icon">📋</div>
+      <div class="service-name">DOLE and PEZA Permit to Operate</div>
+      <div class="service-desc">Full processing of DOLE and PEZA Permit to Operate applications for pressure vessels, elevators, electrical installations, and boilers.</div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-number">10</div>
+      <div class="service-icon">🔬</div>
+      <div class="service-name">Ultrasonic Thickness Gauging</div>
+      <div class="service-desc">Non-destructive testing using ultrasonic technology to measure wall thickness of pipes, tanks, and structural members for integrity assessment.</div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-number">11</div>
+      <div class="service-icon">🏗️</div>
+      <div class="service-name">Elevator Load Testing</div>
+      <div class="service-desc">Comprehensive DOLE-compliant elevator load testing, inspection, and certification for passenger, freight, and service elevators.</div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-number">12</div>
+      <div class="service-icon">🛡️</div>
+      <div class="service-name">Comprehensive Engineering Consultation</div>
+      <div class="service-desc">Technical consultation and value engineering services to optimize your project's cost, performance, and compliance requirements.</div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="section-header reveal">
+    <div class="section-tag">Why Choose Us</div>
+    <h2 class="section-title">The AJALS <em>Advantage</em></h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-item reveal">
+      <div class="why-num">01</div>
+      <div class="why-text">
+        <strong>Licensed & Accredited Professionals</strong>
+        <p>All work is performed and supervised by PRC-licensed engineers, ensuring every project meets the highest standards of Philippine engineering regulations.</p>
+      </div>
+    </div>
+    <div class="why-item reveal">
+      <div class="why-num">02</div>
+      <div class="why-text">
+        <strong>Full-Spectrum Engineering Services</strong>
+        <p>From design and installation to inspection, testing, and permit processing — AJALS is your single-source partner for all engineering needs.</p>
+      </div>
+    </div>
+    <div class="why-item reveal">
+      <div class="why-num">03</div>
+      <div class="why-text">
+        <strong>Code-Compliant Deliverables</strong>
+        <p>Every project strictly adheres to NFPA, PEC, PSME, and local regulatory codes, ensuring your facility passes all government inspections.</p>
+      </div>
+    </div>
+    <div class="why-item reveal">
+      <div class="why-num">04</div>
+      <div class="why-text">
+        <strong>Responsive & Reliable</strong>
+        <p>Viber-ready and reachable — we provide fast turnaround on quotations, site visits, and project execution because we value your time and deadlines.</p>
+      </div>
+    </div>
+    <div class="why-item reveal">
+      <div class="why-num">05</div>
+      <div class="why-text">
+        <strong>End-to-End Project Management</strong>
+        <p>We handle everything from initial design and material procurement through installation, testing, commissioning, and permit filing.</p>
+      </div>
+    </div>
+    <div class="why-item reveal">
+      <div class="why-num">06</div>
+      <div class="why-text">
+        <strong>Safety-First Culture</strong>
+        <p>Our teams are trained in occupational safety and health standards, ensuring every job site is safe for our engineers, client staff, and the public.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-grid">
+    <div class="contact-info reveal">
+      <div class="section-header">
+        <div class="section-tag">Get In Touch</div>
+        <h2 class="section-title">Let's Build <em>Together</em></h2>
+      </div>
+      <p>Ready to start your project? Our team is available to discuss your engineering requirements and provide a detailed quotation. Reach out through any of the channels below.</p>
+      <div class="contact-items">
+        <div class="contact-item">
+          <div class="ci-icon">✉️</div>
+          <div>
+            <div class="ci-label">Primary Email</div>
+            <div class="ci-value"><a href="mailto:ajalsengineeringservices@gmail.com">ajalsengineeringservices@gmail.com</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="ci-icon">📧</div>
+          <div>
+            <div class="ci-label">Secondary Email</div>
+            <div class="ci-value"><a href="mailto:amadoclaguipojr11@gmail.com">amadoclaguipojr11@gmail.com</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="ci-icon">📱</div>
+          <div>
+            <div class="ci-label">Phone / Viber</div>
+            <div class="ci-value"><a href="tel:+639451369853">0945-136-9853 (Viber Ready)</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="ci-icon">👥</div>
+          <div>
+            <div class="ci-label">Facebook</div>
+            <div class="ci-value"><a href="https://facebook.com" target="_blank">AJALS Engineering Services</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form reveal">
+      <div class="section-header" style="margin-bottom:32px;">
+        <div class="section-tag">Quick Inquiry</div>
+        <h3 class="section-title" style="font-size:clamp(28px,3vw,40px);">Send a <em>Message</em></h3>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" placeholder="Juan">
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" placeholder="dela Cruz">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="you@company.com">
+      </div>
+      <div class="form-group">
+        <label>Service Needed</label>
+        <select>
+          <option value="" disabled selected>Select a service…</option>
+          <option>Professional Mechanical Engr Sign & Seal</option>
+          <option>HVAC Design & Installation</option>
+          <option>Fire Detection & Alarm System</option>
+          <option>Electrical & Mechanical Work Installation</option>
+          <option>Smoke Control System</option>
+          <option>Sprinkler System & Fire Hydrant</option>
+          <option>VRF Air Conditioning System</option>
+          <option>DOLE and PEZA Permit to Operate</option>
+          <option>Ultrasonic Thickness Gauging</option>
+          <option>Elevator Load Testing</option>
+          <option>Preventive Maintenance</option>
+          <option>General Inquiry</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea placeholder="Tell us about your project requirements, timeline, and location…"></textarea>
+      </div>
+      <button class="btn-primary" style="width:100%;justify-content:center;" onclick="alert('Thank you! We will get back to you within 24 hours.')">
+        <span>▶</span> Send Inquiry
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">AJ<span>A</span>LS <span style="color:var(--gray-light);font-weight:300;font-size:14px;letter-spacing:2px;">ENGINEERING SERVICES</span></div>
+    <div class="footer-tagline" style="margin-top:6px;">At Your Utmost Service</div>
+  </div>
+  <div class="footer-copy">© 2025 AJALS Engineering Services. All Rights Reserved.</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 80 * (Array.from(entry.target.parentElement.children).indexOf(entry.target) % 4));
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
